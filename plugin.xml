@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-pax-payment" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>PaxPayment</name>
+    <description>Plugin PAX Payment with Kompakts emulator</description>
+    <engines>
+        <engine name="cordova" version=">=7.1.0"/>
+        <engine name="cordova-android" version=">=6.3.0"/>
+    </engines>
+    <js-module name="PaxPayment" src="www/PaxPayment.js">
+        <clobbers target="cordova.plugins.PaxPayment" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="PaxPayment">
+                <param name="android-package" value="com.phonegap.plugins.paxpayment.PaxPayment" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+        <source-file src="src/android/com/phonegap/plugins/paxpayment/PaxPayment.java" target-dir="src/com/phonegap/plugins/paxpayment" />
+    </platform>
+</plugin>

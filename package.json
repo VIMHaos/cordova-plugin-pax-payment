@@ -1,0 +1,27 @@
+{
+  "name": "cordova-plugin-pax-payment",
+  "version": "0.0.1",
+  "description": "Plugin PAX Payment with Kompakts emulator",
+  "cordova": {
+    "id": "cordova-plugin-pax-payment",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VIMHaos/cordova-plugin-pax-payment.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "ecosystem:phonegap",
+    "cordova-android",
+    "cordova:plugin"
+  ],
+  "author": "VIMHaos <MazVasyl@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VIMHaos/cordova-plugin-pax-payment/issues"
+  },
+  "homepage": "https://github.com/VIMHaos/cordova-plugin-pax-payment#readme"
+}
