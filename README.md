@@ -1,6 +1,6 @@
 # cordova-plugin-pax-payment
 
-Plugin PAX Payment with Kompakts emulator (`sk.kompakts.emulator/sk.kompakts.emulator.MainActivity`) for Cordova/PhoneGap.
+PAX Payment is Cordova/PhoneGap Plugin for Kompakts emulator (`sk.kompakts.emulator/sk.kompakts.emulator.MainActivity`).
 
 Follows the [Cordova Plugin spec](https://cordova.apache.org/docs/en/latest/plugin_ref/spec.html), so that it works with [Plugman](https://github.com/apache/cordova-plugman).
 
