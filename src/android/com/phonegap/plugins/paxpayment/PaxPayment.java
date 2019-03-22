@@ -14,7 +14,6 @@ import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONParser;
 
 public class PaxPayment extends CordovaPlugin {
     public static final int REQUEST_CODE = 0;
@@ -103,9 +102,7 @@ public class PaxPayment extends CordovaPlugin {
             if (resultCode == Activity.RESULT_OK) {
                 JSONObject obj = new JSONObject();
                 try {
-                    String pos_emulator_result = intent.getStringExtra("POS_EMULATOR_RESULT");
-                    
-                    obj.put(RESULT, new JSONObject(pos_emulator_result));
+                    obj.put(RESULT, new JSONObject(intent.getStringExtra("POS_EMULATOR_RESULT")));
                     obj.put(CANCELLED, false);
                 } catch (JSONException e) {
                     Log.d(LOG_TAG, "This should never happen");
