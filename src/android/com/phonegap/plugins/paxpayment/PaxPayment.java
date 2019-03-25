@@ -91,11 +91,11 @@ public class PaxPayment extends CordovaPlugin {
         if(service_installed){
             this.emulatorState = true;
             
-            Log.d(LOG_TAG, "Kompakts sevice " + this.emulatorName + " is registered");
+            Log.d(LOG_TAG, "Kompakts service " + this.emulatorName + " is registered");
             this.callbackContext.success("Kompakts sevice \"" + this.emulatorName + "\" is registered");
         } else {
-            Log.d(LOG_TAG, "Kompakts sevice " + this.emulatorName + " Not Found");
-            this.callbackContext.error("Kompakts sevice \"" + this.emulatorName + "\" Not Found");
+            Log.d(LOG_TAG, "Kompakts service " + this.emulatorName + " Not Found");
+            this.callbackContext.error("Kompakts service \"" + this.emulatorName + "\" Not Found");
         }
     }
     
