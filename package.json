@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-pax-payment",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "PAX Payment is Cordova/PhoneGap Plugin for Kompakts emulator",
   "cordova": {
     "id": "cordova-plugin-pax-payment",

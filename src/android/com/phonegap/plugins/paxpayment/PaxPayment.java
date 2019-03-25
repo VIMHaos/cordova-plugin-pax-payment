@@ -18,12 +18,14 @@ import org.json.JSONObject;
 public class PaxPayment extends CordovaPlugin {
     public static final int REQUEST_CODE = 0;
     
-    private static final String REQUEST = "request";
     private static final String RESULT = "result";
     private static final String CANCELLED = "cancelled";
     
     public static final String LOG_TAG = "PaxPayment";
 
+    private String emulatorName = "sk.kompakts.emulator";
+    public boolean emulatorState = false;
+    
     private JSONArray requestArgs;
     private CallbackContext callbackContext;
 	
@@ -54,38 +56,77 @@ public class PaxPayment extends CordovaPlugin {
         this.callbackContext = callbackContext;
         this.requestArgs = args;
 
-        if (action.equals(REQUEST)) {
+        if (action.equals("request")) {
             JSONObject obj = args.optJSONObject(0);
             request(obj);
+            return true;
+        } else if (action.equals("register")) {
+            String name = args.getString(0);
+            register(name);
             return true;
         }
         return false;
     }
 
     /**
+     * Register Kompakts emulator by Name.
+     * @param name
+     * @return 
+     */
+    public void register(String name) {
+        this.emulatorState = false;
+        
+        if("" != name) this.emulatorName = name;
+        
+        PackageManager pm = getPackageManager();
+        boolean service_installed = false;
+        try {
+            pm.getPackageInfo(this.emulatorName, PackageManager.GET_ACTIVITIES);
+            service_installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            service_installed = false;
+        }
+        
+        if(service_installed){
+            this.emulatorState = true;
+            
+            Log.d(LOG_TAG, "Kompakts sevice " + this.emulatorName + " is registered");
+            this.callbackContext.success("Kompakts sevice \"" + this.emulatorName + "\" is registered");
+        } else {
+            Log.d(LOG_TAG, "Kompakts sevice " + this.emulatorName + " Not Found");
+            this.callbackContext.error("Kompakts sevice \"" + this.emulatorName + "\" Not Found");
+        }
+    }
+    
+    /**
      * Starts an intent to payment with Kompakts emulator.
      * 
      * @param request An JSONObject, with request options.
     */
     public void request(JSONObject request) throws JSONException {
-        final CordovaPlugin that = this;
+        if (this.emulatorState) {
+            final CordovaPlugin that = this;
 
-        cordova.getThreadPool().execute(new Runnable() {
-            public void run() {
-                try {
-                    Intent intentPayment = new Intent();
-                    intentPayment.setComponent(new ComponentName("sk.kompakts.emulator", "sk.kompakts.emulator.MainActivity"));
-                    
-                    // add config as intent extras
-                    String requestInJsonFormat = request.toString();
-                    intentPayment.putExtra("POS_EMULATOR_EXTRA", requestInJsonFormat);
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    try {
+                        Intent intentPayment = new Intent();
+                        intentPayment.setComponent(new ComponentName(that.emulatorName, that.emulatorName + ".MainActivity"));
 
-                    that.cordova.startActivityForResult(that, intentPayment, REQUEST_CODE);
-                } catch (Exception e) {
-                    Log.e(LOG_TAG, "Unexpected error: "+ e.getMessage());
+                        // add config as intent extras
+                        String requestInJsonFormat = request.toString();
+                        intentPayment.putExtra("POS_EMULATOR_EXTRA", requestInJsonFormat);
+
+                        that.cordova.startActivityForResult(that, intentPayment, REQUEST_CODE);
+                    } catch (Exception e) {
+                        Log.e(LOG_TAG, "Unexpected error: "+ e.getMessage());
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            Log.e(LOG_TAG, "Kompakts emulator is not registered");
+            this.callbackContext.error("Kompakts emulator is not registered");
+        }
     }
 	
     /**
@@ -125,7 +166,7 @@ public class PaxPayment extends CordovaPlugin {
             }
         }
     }
-
+    
     /**
      * This plugin launches an external Activity when the payment is opened, so we
      * need to implement the save/restore API in case the Activity gets killed
