@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.ComponentName;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -78,10 +79,10 @@ public class PaxPayment extends CordovaPlugin {
         
         if("" != name) this.emulatorName = name;
         
-        PackageManager pm = getPackageManager();
+        PackageManager pm = cordova.getActivity().getPackageManager();
         boolean service_installed = false;
         try {
-            pm.getPackageInfo(this.emulatorName, PackageManager.GET_ACTIVITIES);
+            PackageInfo info = pm.getPackageInfo(this.emulatorName, PackageManager.GET_ACTIVITIES);
             service_installed = true;
         } catch (PackageManager.NameNotFoundException e) {
             service_installed = false;
