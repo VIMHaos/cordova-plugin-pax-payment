@@ -107,12 +107,14 @@ public class PaxPayment extends CordovaPlugin {
     public void request(JSONObject request) throws JSONException {
         if (this.emulatorState) {
             final CordovaPlugin that = this;
+            
+            String emulatorName = this.emulatorName;
 
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     try {
                         Intent intentPayment = new Intent();
-                        intentPayment.setComponent(new ComponentName(that.emulatorName, that.emulatorName + ".MainActivity"));
+                        intentPayment.setComponent(new ComponentName(emulatorName, emulatorName + ".MainActivity"));
 
                         // add config as intent extras
                         String requestInJsonFormat = request.toString();
